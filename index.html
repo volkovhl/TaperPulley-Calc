@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор конуса для шкива</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 920px; 
+            margin: 15px auto; 
+            padding: 15px; 
+            background: #f9f9f9; 
+        }
+        h1 { text-align: center; color: #2c3e50; }
+        .container { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        }
+        label { display: block; margin: 15px 0 6px; font-weight: bold; }
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            font-size: 17px; 
+            border: 1px solid #ccc; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+        }
+        .controls { margin: 15px 0; text-align: center; }
+        button { 
+            padding: 12px 20px; 
+            margin: 0 5px; 
+            font-size: 16px; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+        }
+        .zoom-btn { background: #3498db; color: white; }
+        .calc-btn { background: #27ae60; color: white; font-size: 17px; padding: 14px 28px; }
+
+        .viz { 
+            margin: 20px 0; 
+            text-align: center; 
+            background: #f8f8f8; 
+            padding: 15px; 
+            border-radius: 10px; 
+        }
+        svg { 
+            width: 100%; 
+            max-width: 820px; 
+            height: auto; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: white; 
+        }
+        .result { 
+            margin-top: 20px; 
+            padding: 18px; 
+            background: #e8f5e9; 
+            border-radius: 10px; 
+            font-size: 19px; 
+            line-height: 1.6; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Калькулятор конуса для шкива</h1>
+        <p style="text-align:center; color:#555;">Точим вал первым</p>
+        <label>Материал шкива:</label>
+        <select id="material">
+            <option value="aluminum">Алюминий / Дюраль</option>
+            <option value="steel">Сталь</option>
+            <option value="castiron">Чугун</option>
+            <option value="plastic">Капролон / Пластик</option>
+            <option value="zinc">Цинковый сплав</option>
+            <option value="brass">Латунь</option>
+        </select>
+
+        <label>Тип конуса:</label>
+        <select id="fitType">
+            <option value="self">Самозаклинивающийся</option>
+            <option value="free">Разборный</option>
+        </select>
+
+        <label>Большой диаметр D (мм):</label>
+        <input type="number" id="D" step="0.01" value="14">
+
+        <label>Длина конуса L (мм):</label>
+        <input type="number" id="L" step="0.1" value="30">
+
+        <div class="controls">
+        </div>
+
+        <div class="viz">
+            <div style="margin-bottom:10px;">
+                <button onclick="zoomOut()" class="zoom-btn">− Уменьшить</button>
+                <button onclick="zoomIn()" class="zoom-btn">+ Увеличить</button>
+                <button onclick="resetZoom()" class="zoom-btn">Сбросить масштаб</button>
+            </div>
+            <svg id="coneSVG" viewBox="0 0 820 280" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        let currentScale = 1.0;
+
+        const recs = {
+            aluminum: {k:18, name:"Алюминий / Дюраль"},
+            steel:    {k:11, name:"Сталь"},
+            castiron: {k:11, name:"Чугун"},
+            plastic:  {k:22, name:"Капролон / Пластик"},
+            zinc:     {k:13, name:"Цинковый сплав"},
+            brass:    {k:14, name:"Латунь"}
+        };
+
+        function getK(baseK, fitType) {
+            return (fitType === "free") ? Math.round(baseK * 0.75) : baseK;
+        }
+
+        function drawCone() {
+            const D = parseFloat(document.getElementById('D').value) || 14;
+            const L = parseFloat(document.getElementById('L').value) || 30;
+            const matKey = document.getElementById('material').value;
+            const fitType = document.getElementById('fitType').value;
+
+            const baseK = recs[matKey].k;
+            const k = getK(baseK, fitType);
+
+            const delta = L / k;
+            const d = Math.max(D - delta, 2);
+
+            const svg = document.getElementById('coneSVG');
+            svg.innerHTML = '';
+
+            let baseScale = 820 / (L + 60);
+            if (baseScale > 9) baseScale = 9;
+            if (baseScale < 3) baseScale = 3;
+
+            const scale = baseScale * currentScale;
+            const xLeft = 70;
+            const yCenter = 140;
+            const lengthPx = L * scale;
+
+            const rBig = (D / 2) * scale;
+            const rSmall = (d / 2) * scale;
+
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("d", `
+                M ${xLeft} ${yCenter - rBig} 
+                L ${xLeft + lengthPx} ${yCenter - rSmall} 
+                L ${xLeft + lengthPx} ${yCenter + rSmall} 
+                L ${xLeft} ${yCenter + rBig} Z
+            `);
+            path.setAttribute("fill", "#a3d8ff");
+            path.setAttribute("stroke", "#2c7da3");
+            path.setAttribute("stroke-width", "7");
+            svg.appendChild(path);
+
+            addText(svg, xLeft - 5, yCenter - rBig - 18, `D = ${D} мм`, 18);
+            addText(svg, xLeft + lengthPx + 12, yCenter - rSmall - 12, `d = ${d.toFixed(2)} мм`, 18);
+            addText(svg, xLeft + lengthPx/2 - 25, yCenter + Math.max(rBig, rSmall) + 32, `L = ${L} мм`, 17);
+        }
+
+        function addText(svg, x, y, txt, size) {
+            const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            t.setAttribute("x", x);
+            t.setAttribute("y", y);
+            t.setAttribute("font-size", size);
+            t.setAttribute("fill", "#222");
+            t.textContent = txt;
+            svg.appendChild(t);
+        }
+
+        function updateAll() {
+            const D = parseFloat(document.getElementById('D').value) || 14;
+            const L = parseFloat(document.getElementById('L').value) || 30;
+            const matKey = document.getElementById('material').value;
+            const fitType = document.getElementById('fitType').value;
+
+            const r = recs[matKey];
+            const k = getK(r.k, fitType);
+
+            const delta = L / k;
+            const d = (D - delta).toFixed(2);
+
+            const alpha_deg = Math.atan(delta / (2 * L)) * 180 / Math.PI;
+            const degrees = Math.floor(alpha_deg);
+            const minutes = Math.round((alpha_deg - degrees) * 60);
+            const rounded_min = Math.round(minutes / 2) * 2;
+
+            document.getElementById('result').innerHTML = `
+                <strong>Угол для угломера Семенова:</strong><br>
+                <strong style="font-size:26px; color:#27ae60;">${degrees}° ${rounded_min}'<br></strong>
+                <strong>Конусность:</strong> 1:${k}<br>
+                <strong>Тип:</strong> ${fitType === "self" ? "самозаклинивающийся" : "разборный"}
+            `;
+
+            drawCone();
+        }
+
+        function zoomIn() {
+            currentScale += 0.15;
+            if (currentScale > 3) currentScale = 3;
+            drawCone();
+        }
+
+        function zoomOut() {
+            currentScale -= 0.15;
+            if (currentScale < 0.4) currentScale = 0.4;
+            drawCone();
+        }
+
+        function resetZoom() {
+            currentScale = 1.0;
+            drawCone();
+        }
+
+        window.onload = () => {
+            document.querySelectorAll('input, select').forEach(el => {
+                el.addEventListener('input', updateAll);
+            });
+            updateAll();
+        };
+    </script>
+</body>
+</html>
