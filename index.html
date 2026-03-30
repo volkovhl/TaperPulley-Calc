@@ -3,545 +3,552 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    
-    <!-- ========== ОСНОВНЫЕ SEO-ТЕГИ ДЛЯ РОССИИ ========== -->
-    <title>Калькулятор конуса для шкива — угол наклона образующей для токаря</title>
-    <meta name="description"
-        content="Бесплатный калькулятор конуса для шкива: точный расчёт малого диаметра d, конусности 1:k и УГЛА НАКЛОНА ОБРАЗУЮЩЕЙ с округлением под шкалу угломера Семенова (2 минуты). Для токарных работ по металлу.">
-    <meta name="keywords"
-        content="калькулятор конуса, расчёт конуса шкива, конусность 1:10, угол конуса, угломер Семенова, половина угла конуса, токарные работы, шкив на вал">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Павел Волков">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="Калькулятор конуса для шкива — угол наклона образующей для токаря">
-    <meta property="og:description"
-        content="Точный расчёт конусности, малого диаметра и УГЛА ДЛЯ УГЛОМЕРА СЕМЕНОВА (округление). Визуализация. Рекомендации по материалам.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://volkovhl.github.io/TaperPulley-Calc/">
-    <meta property="og:site_name" content="Калькулятор конуса для шкива">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
-    
+    <title>Калькулятор конуса шкива — угол наклона образующей под угломер Семенова</title>
+    <meta name="description" content="Точный расчёт малого диаметра, конусности 1:k и угла наклона образующей с округлением до 2 минут — для угломера Семенова. Визуализация конуса, рекомендации для токаря.">
+    <meta name="keywords" content="калькулятор конуса, угол наклона образующей, угломер Семенова, половина угла конуса, токарные работы, шкив на вал, конусность">
     <style>
         * {
             box-sizing: border-box;
         }
 
-        body { 
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; 
-            max-width: 980px; 
-            margin: 12px auto; 
-            padding: 12px; 
-            background: #f5f7fb; 
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 16px;
+            /* основной фон — как на снимке: тёплая желтоватая бумага */
+            background: #f7efcf;
         }
 
-        h1 { 
-            text-align: center; 
-            color: #1e2f3e; 
-            font-size: clamp(1.5rem, 6vw, 2rem); 
-            margin: 0 0 8px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .container { 
-            background: white; 
-            padding: 18px; 
-            border-radius: 24px; 
-            box-shadow: 0 8px 24px rgba(0,0,0,0.05); 
-        }
-
-        .youtube-banner {
-            background: linear-gradient(135deg, #ffebee 0%, #fff3e0 100%);
-            border-radius: 20px;
-            padding: 14px 18px;
-            margin: 16px 0 12px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            border: 1px solid #ffe0b5;
+        /* главная карточка — стилизована под "техническую заметку" */
+        .taper-card {
+            background: #fffef5;   /* почти белый с легчайшим жёлтым отливом, как страница */
+            border-radius: 32px;
+            padding: 20px 24px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eedfbb;
             transition: all 0.2s;
         }
-        .youtube-banner:hover {
-            background: linear-gradient(135deg, #ffe0e4 0%, #ffe6cc 100%);
-        }
-        .youtube-text {
+
+        h1 {
+            text-align: center;
+            font-size: clamp(1.6rem, 7vw, 2.2rem);
+            color: #4a3520;
+            margin: 0 0 6px 0;
             display: flex;
             align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .youtube-icon {
-            font-size: 32px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-        .youtube-btn {
-            background: #ff0000;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 8px rgba(255,0,0,0.3);
-            border: none;
-        }
-        .youtube-btn:hover {
-            background: #cc0000;
-            transform: scale(1.02);
-            text-decoration: none;
-            color: white;
-        }
-
-        label { 
-            display: block; 
-            margin: 14px 0 5px; 
-            font-weight: 600; 
-            font-size: 0.95rem;
-            color: #2c3e50;
-        }
-
-        input, select { 
-            width: 100%; 
-            padding: 12px 14px; 
-            font-size: 16px; 
-            border: 1.5px solid #e2e8f0; 
-            border-radius: 14px; 
-            background: #ffffff;
-            transition: border 0.2s, box-shadow 0.2s;
-            font-family: inherit;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #27ae60;
-            box-shadow: 0 0 0 3px rgba(39,174,96,0.2);
-        }
-
-        .controls { 
-            margin: 18px 0 12px; 
-            text-align: center; 
-        }
-
-        .zoom-group {
-            display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 12px;
-            margin-bottom: 15px;
+            flex-wrap: wrap;
+            font-weight: 650;
+            letter-spacing: -0.3px;
         }
-
-        button { 
-            font-family: inherit;
-            font-weight: 600;
-            border: none; 
+        h1 span {
+            background: #f6e8d0;
+            padding: 0 12px;
             border-radius: 60px;
-            cursor: pointer; 
-            transition: all 0.2s ease;
-            background: #f1f5f9;
-            color: #1e293b;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #b2763c;
         }
 
-        .zoom-btn {
-            padding: 10px 20px;
-            font-size: 1rem;
-            background: #eef2ff;
-            color: #1e40af;
-            flex: 0 1 auto;
-            min-width: 100px;
+        .sub {
+            text-align: center;
+            color: #b68b54;
+            margin-top: -8px;
+            margin-bottom: 18px;
+            font-size: 0.85rem;
+            border-bottom: 1px dashed #eedfbb;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 5px;
+        }
+
+        /* двухколоночная сетка для формы + результатов на широких экранах */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 20px 0 18px;
+        }
+        .form-panel {
+            flex: 1.2;
+            min-width: 220px;
+        }
+        .result-panel {
+            flex: 2;
+            min-width: 260px;
+        }
+
+        label {
+            display: block;
+            margin: 16px 0 6px;
             font-weight: 600;
-            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            color: #5c401f;
+            letter-spacing: -0.2px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border: 1.5px solid #e4d3b0;
+            border-radius: 20px;
+            background: #fffdf7;
+            transition: all 0.2s;
+            font-family: inherit;
+            color: #2f2419;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #cb9f6b;
+            background: #fffffc;
+            box-shadow: 0 0 0 3px rgba(203, 159, 107, 0.2);
+        }
+        .inline-hint {
+            font-size: 0.7rem;
+            color: #b68f5a;
+            margin-top: 5px;
+            margin-left: 8px;
         }
 
+        /* зум-кнопки в стиле чертежа */
+        .zoom-bar {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin: 16px 0 12px;
+        }
+        .zoom-btn {
+            background: #f5ecdb;
+            border: 1px solid #e1cfaa;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #7b592f;
+            cursor: pointer;
+            transition: 0.15s linear;
+            font-family: inherit;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+        }
         .zoom-btn:active {
             transform: scale(0.96);
+            background: #ede1cc;
         }
 
-        .viz { 
-            margin: 24px 0 20px; 
-            text-align: center; 
-            background: #fefefe; 
-            padding: 12px 8px; 
-            border-radius: 24px; 
-            border: 1px solid #edf2f7;
+        .viz-container {
+            background: #fefcf2;
+            border-radius: 28px;
+            padding: 12px 8px;
+            margin: 10px 0 10px;
+            border: 1px solid #efe1c2;
         }
-
         .svg-wrapper {
             background: #ffffff;
             border-radius: 20px;
-            padding: 5px;
+            padding: 6px;
             display: flex;
             justify-content: center;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            box-shadow: inset 0 0 0 1px #f9f0df, 0 2px 6px rgba(0,0,0,0.02);
         }
-
-        svg { 
+        svg {
             width: 100%;
             height: auto;
             max-width: 820px;
             min-width: 260px;
             display: block;
             background: white;
-            border-radius: 16px;
+            border-radius: 18px;
         }
-
-        .result { 
-            margin-top: 24px; 
-            padding: 18px 20px; 
-            background: #eefaf0; 
-            border-radius: 24px; 
-            font-size: 1.05rem; 
-            line-height: 1.5;
-            border-left: 5px solid #27ae60;
-        }
-
-        .angle-value {
-            font-size: clamp(1.6rem, 8vw, 2.2rem);
-            font-weight: 800;
-            color: #1f8a4c;
-            background: white;
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 60px;
-            margin: 6px 0 8px;
-            box-shadow: inset 0 0 0 1px #c8e6d9;
-        }
-        
-        .info-note {
-            font-size: 0.7rem; 
-            color: #7c8b9f; 
+        .swipe-note {
+            font-size: 0.65rem;
+            text-align: center;
+            color: #bc9a6a;
             margin-top: 6px;
         }
-        
-        .full-angle-note {
-            background: #f0f4f9;
-            border-radius: 16px;
-            padding: 8px 12px;
-            margin: 10px 0;
+
+        /* блок результата в стиле "заметка токаря" как на снимке */
+        .result-block {
+            background: #fff9ed;
+            border-radius: 28px;
+            padding: 20px;
+            border-left: 6px solid #d9a156;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,240,0.8);
+        }
+        .angle-badge {
+            background: #fff6e2;
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-size: clamp(1.7rem, 6vw, 2.4rem);
+            font-weight: 800;
+            color: #bc6f2c;
+            margin: 6px 0 10px;
+            box-shadow: inset 0 0 0 1px #f1e2c3, 0 2px 4px rgba(0,0,0,0.02);
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+        .exact-value {
             font-size: 0.85rem;
-            color: #2c5a74;
+            color: #a17b48;
+            margin-bottom: 10px;
         }
-
-        hr {
-            margin: 10px 0;
-            border: none;
-            border-top: 1px solid #d0e2d4;
+        .reference-data {
+            background: #fef5e4;
+            border-radius: 22px;
+            padding: 12px 18px;
+            margin: 15px 0;
+            font-size: 0.85rem;
+            color: #6a4d27;
+            border: 1px solid #f2e2c4;
         }
-
+        .tip-box {
+            background: #fef1df;
+            border-radius: 22px;
+            padding: 12px 18px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            border: 1px solid #ecdcba;
+            color: #5b3e1c;
+        }
         .footer-note {
-            margin-top: 20px;
+            margin-top: 28px;
             text-align: center;
-            font-size: 0.75rem;
-            color: #6c7a8e;
-            border-top: 1px solid #ecf3f0;
-            padding-top: 16px;
+            font-size: 0.72rem;
+            color: #b88f5b;
+            border-top: 1px solid #e9dbbc;
+            padding-top: 18px;
         }
-
-        @media (max-width: 560px) {
-            .container { padding: 14px; }
-            .zoom-group { gap: 8px; }
-            .zoom-btn {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-                min-width: 75px;
-                flex: 1 0 auto;
-                max-width: 110px;
-            }
-            .youtube-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-            .youtube-text {
-                justify-content: center;
-            }
+        .footer-note a {
+            color: #bc7a3a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #eedfbf;
+            margin: 12px 0;
+        }
+        @media (max-width: 720px) {
+            .taper-card { padding: 16px; }
+            .result-block { padding: 16px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔧 Калькулятор конуса <span style="font-weight: 400;">для шкива</span></h1>
-        <p style="text-align:center; color:#4a627a; margin-top: -5px; font-size: 0.9rem;">⚙️ Угол наклона образующей с округлением под угломер Семенова (2 минуты)</p>
-                <div></div>
-            </div>
-            </a>
-        </div>
-        
-        <label>📦 Материал шкива:</label>
-        <select id="material">
-            <option value="aluminum">Алюминий / Дюраль</option>
-            <option value="steel">Сталь</option>
-            <option value="castiron">Чугун</option>
-            <option value="plastic">Капролон / Пластик</option>
-            <option value="zinc">Цинковый сплав</option>
-            <option value="brass">Латунь</option>
-        </select>
+<div class="taper-card">
+    <h1>🔧 Калькулятор конуса <span>для шкива</span></h1>
+    <div style="text-align: center;">
+        <div class="sub">⚙️ угол наклона образующей с округлением под угломер Семенова (2')</div>
+    </div>
 
-        <label>🔩 Тип конуса:</label>
-        <select id="fitType">
-            <option value="self">Самозаклинивающийся (неразборный)</option>
-            <option value="free">Разборный (легкосъёмный)</option>
-        </select>
+    <div class="dashboard">
+        <!-- левая панель ввода -->
+        <div class="form-panel">
+            <label>📀 Материал шкива:</label>
+            <select id="material">
+                <option value="aluminum">Алюминий / Дюраль</option>
+                <option value="steel">Сталь</option>
+                <option value="castiron">Чугун</option>
+                <option value="plastic">Капролон / Пластик</option>
+                <option value="zinc">Цинковый сплав</option>
+                <option value="brass">Латунь</option>
+            </select>
 
-        <label>📏 Большой диаметр D (мм):</label>
-        <input type="number" id="D" step="0.01" value="14" placeholder="Например: 14">
+            <label>🔩 Тип конуса:</label>
+            <select id="fitType">
+                <option value="self">Самозаклинивающийся (неразборный)</option>
+                <option value="free">Разборный (легкосъёмный)</option>
+            </select>
 
-        <label>📐 Длина конуса L (мм):</label>
-        <input type="number" id="L" step="0.1" value="30" placeholder="Длина посадочной части">
+            <label>📏 Большой диаметр D (мм):</label>
+            <input type="number" id="D" step="0.01" value="14.0" placeholder="Напр. 14">
+            <div class="inline-hint">внешний диаметр шкива посадочный</div>
 
-        <div class="controls">
-            <div class="zoom-group">
-                <button onclick="zoomOut()" class="zoom-btn" aria-label="Уменьшить чертёж">➖ Уменьшить</button>
-                <button onclick="zoomIn()" class="zoom-btn" aria-label="Увеличить чертёж">➕ Увеличить</button>
-                <button onclick="resetZoom()" class="zoom-btn" aria-label="Сбросить масштаб">🔄 Сброс</button>
-            </div>
+            <label>📐 Длина конуса L (мм):</label>
+            <input type="number" id="L" step="0.1" value="30.0" placeholder="Длина посадочной части">
         </div>
 
-        <div class="viz">
-            <div class="svg-wrapper">
-                <svg id="coneSVG" viewBox="0 0 820 280" preserveAspectRatio="xMidYMid meet" style="background: white;"></svg>
+        <!-- правая панель результатов -->
+        <div class="result-panel">
+            <div class="result-block" id="resultBlock">
+                <!-- динамическое содержимое -->
+                <div style="text-align: center; color: #b88a51;">⏳ загрузка данных...</div>
             </div>
-            <div class="info-note">↖️ Свайпайте для детального просмотра чертежа</div>
-        </div>
-
-        <div class="result" id="result"></div>
-        
-        <div class="footer-note">
-            📌 Калькулятор конуса для шкива — расчёт по методике “точим вал первым”.<br>
-            🎯 <strong>Угол округлён</strong> — под шкалу угломера Семенова (цена деления 2 минуты).<br>
-            Конусность 1:k и малый диаметр. Автор: Павел Волков.<br>
-            🔗 Проект на GitHub: <a href="https://volkovhl.github.io/TaperPulley-Calc/" target="_blank" rel="author">TaperPulley-Calc</a> 
         </div>
     </div>
 
-    <script>
-        let currentScale = 1.0;
-        let debounceTimer = null;
-        
-        const recs = {
-            aluminum: {k:18, name:"Алюминий / Дюраль"},
-            steel:    {k:11, name:"Сталь"},
-            castiron: {k:11, name:"Чугун"},
-            plastic:  {k:22, name:"Капролон / Пластик"},
-            zinc:     {k:13, name:"Цинковый сплав"},
-            brass:    {k:14, name:"Латунь"}
-        };
+    <!-- зум-кнопки + визуализация -->
+    <div class="zoom-bar">
+        <button class="zoom-btn" id="zoomOutBtn">➖ Уменьшить</button>
+        <button class="zoom-btn" id="zoomInBtn">➕ Увеличить</button>
+        <button class="zoom-btn" id="resetZoomBtn">🔄 Сброс</button>
+    </div>
+    <div class="viz-container">
+        <div class="svg-wrapper">
+            <svg id="coneSVG" viewBox="0 0 820 280" preserveAspectRatio="xMidYMid meet" style="background: #ffffff;"></svg>
+        </div>
+        <div class="swipe-note">↖️ Свайпайте чертёж для детального просмотра</div>
+    </div>
 
-        function getK(baseK, fitType) {
-            return (fitType === "free") ? Math.round(baseK * 0.75) : baseK;
-        }
+    <div class="footer-note">
+        📌 Расчёт по методике “точим вал первым”. Угол округлён до ближайших 2 минут — шкала угломера Семенова.<br>
+        🎯 Конусность, малый диаметр и точный угол. Автор: Павел Волков · 
+        <a href="https://volkovhl.github.io/TaperPulley-Calc/" target="_blank" rel="author">Проект на GitHub</a> · 
+        <a href="https://www.youtube.com/@Pavel_Volkov" target="_blank">Дела Техники</a>
+    </div>
+</div>
+
+<script>
+    // ---------- база данных материалов и конусности ----------
+    const materialDB = {
+        aluminum: { k: 18, name: "Алюминий / Дюраль" },
+        steel:    { k: 11, name: "Сталь" },
+        castiron: { k: 11, name: "Чугун" },
+        plastic:  { k: 22, name: "Капролон / Пластик" },
+        zinc:     { k: 13, name: "Цинковый сплав" },
+        brass:    { k: 14, name: "Латунь" }
+    };
+
+    // коррекция конусности в зависимости от типа посадки (разборный = легче съём, уменьшаем конусность)
+    function getEffectiveK(baseK, fitType) {
+        return (fitType === "free") ? Math.round(baseK * 0.75) : baseK;
+    }
+
+    // округление угла до чётных минут (цена деления угломера Семенова = 2')
+    function roundToEvenMinutes(angleDeg) {
+        if (angleDeg < 0) return { deg: 0, min: 0 };
+        const totalMinutes = angleDeg * 60;
+        const roundedMinutes = Math.round(totalMinutes / 2) * 2;
+        const deg = Math.floor(roundedMinutes / 60);
+        const min = roundedMinutes % 60;
+        return { deg, min };
+    }
+
+    // глобальные переменные
+    let currentScale = 1.0;
+    let updateTimer = null;
+
+    // получение текущих параметров из формы
+    function getInputParams() {
+        let D = parseFloat(document.getElementById('D').value);
+        let L = parseFloat(document.getElementById('L').value);
+        const materialKey = document.getElementById('material').value;
+        const fitType = document.getElementById('fitType').value;
+        if (isNaN(D) || D <= 0) D = 14.0;
+        if (isNaN(L) || L <= 0.01) L = 30.0;
+        const baseK = materialDB[materialKey].k;
+        const k = getEffectiveK(baseK, fitType);
+        const delta = L / k;
+        let d = D - delta;
+        if (d < 0.01) d = 0.01;
+        return { D, L, k, d, materialKey, fitType };
+    }
+
+    // расчёт углов и данных для результата
+    function computeAngles(D, L, d) {
+        const halfDiff = (D - d) / 2;
+        let alphaRad = Math.atan(halfDiff / L);
+        let alphaDeg = alphaRad * 180 / Math.PI;
+        if (alphaDeg < 0) alphaDeg = 0;
+        const totalConeAngle = alphaDeg * 2;
+        const roundedHalf = roundToEvenMinutes(alphaDeg);
+        return { alphaDeg, totalConeAngle, roundedHalf };
+    }
+
+    // формирование HTML результата в стиле "снимок экрана"
+    function updateResultPanel() {
+        const { D, L, k, d, materialKey, fitType } = getInputParams();
+        const materialObj = materialDB[materialKey];
+        const { alphaDeg, totalConeAngle, roundedHalf } = computeAngles(D, L, d);
         
-        // Функция округления угла до (под угломер Семенова)
-        function roundToEvenMinutes(angleDeg) {
-            if (angleDeg < 0) return {deg: 0, min: 0};
-            
-            const totalMinutes = angleDeg * 60;
-            const roundedMinutes = Math.round(totalMinutes / 2) * 2; // округление
-            const deg = Math.floor(roundedMinutes / 60);
-            const min = roundedMinutes % 60;
-            return {deg, min};
-        }
+        const isSelfLock = (fitType === "self");
+        const fitReadable = isSelfLock ? "🔒 Самозаклинивающийся (неразборный)" : "🔓 Разборный (лёгкий съём)";
         
-        function drawCone() {
-            const D = parseFloat(document.getElementById('D').value) || 14;
-            let L = parseFloat(document.getElementById('L').value) || 30;
-            if (L <= 0) L = 0.5;
-            const matKey = document.getElementById('material').value;
-            const fitType = document.getElementById('fitType').value;
-            const baseK = recs[matKey].k;
-            const k = getK(baseK, fitType);
-            
-            const delta = L / k;
-            let d = D - delta;
-            if (d < 0.2) d = 0.2;
-            if (d > D) d = D;
-            
-            const svg = document.getElementById('coneSVG');
-            if (!svg) return;
-            svg.innerHTML = '';
-            
-            let baseScale = 780 / (L + 55);
-            if (baseScale > 9) baseScale = 9;
-            if (baseScale < 2.5) baseScale = 2.5;
-            const finalScale = baseScale * Math.min(Math.max(currentScale, 0.45), 3.2);
-            
-            const startX = 70;
-            const centerY = 140;
-            const lengthPx = L * finalScale;
-            const rBig = (D / 2) * finalScale;
-            const rSmall = (d / 2) * finalScale;
-            
-            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            const dPath = `
-                M ${startX} ${centerY - rBig} 
-                L ${startX + lengthPx} ${centerY - rSmall} 
-                L ${startX + lengthPx} ${centerY + rSmall} 
-                L ${startX} ${centerY + rBig} Z
-            `;
-            path.setAttribute("d", dPath);
-            path.setAttribute("fill", "#c1e2ff");
-            path.setAttribute("stroke", "#1f6392");
-            path.setAttribute("stroke-width", "2.5");
-            svg.appendChild(path);
-            
-            const axis = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            axis.setAttribute("x1", startX - 6);
-            axis.setAttribute("y1", centerY);
-            axis.setAttribute("x2", startX + lengthPx + 12);
-            axis.setAttribute("y2", centerY);
-            axis.setAttribute("stroke", "#9aaec0");
-            axis.setAttribute("stroke-width", "1");
-            axis.setAttribute("stroke-dasharray", "5 3");
-            svg.appendChild(axis);
-            
-            addText(svg, startX - 3, centerY - rBig - 10, `⌀D = ${D.toFixed(2)} мм`, 15, "bold");
-            addText(svg, startX + lengthPx + 8, centerY - rSmall - 9, `⌀d = ${d.toFixed(2)} мм`, 15, "bold");
-            const midX = startX + lengthPx / 2;
-            const yOffset = Math.max(rBig, rSmall) + 26;
-            addText(svg, midX - 20, centerY + yOffset, `L = ${L.toFixed(1)} мм`, 14, "normal");
-            addText(svg, startX + lengthPx - 45, centerY - 18, `1:${k}`, 12, "italic", "#2c6e9e");
-        }
+        let tipMessage = "";
+        if (alphaDeg < 1.2) tipMessage = "⚠️ Очень малый угол — используйте конусную линейку или точную настройку верхней каретки с индикатором.";
+        else if (alphaDeg > 12) tipMessage = "📐 Угол значительный — удобно обрабатывать поворотом верхней каретки.";
+        else tipMessage = "✅ Стандартный угол, можно обработать поворотом верхней каретки или конусной линейкой.";
         
-        function addText(svg, x, y, txt, fontSize, fontWeight = "normal", color = "#1f3a4b") {
+        // дополнительный совет про установку
+        const installAdvice = `Выставьте верхнюю каретку или угломер на ${roundedHalf.deg}° ${roundedHalf.min}' — это половина угла конуса, округлённая под шкалу угломера Семенова.`;
+        
+        const resultHTML = `
+            <div style="font-weight: 700; font-size: 1rem; color: #7a582f;">УГОЛ ДЛЯ УГЛОМЕРА СЕМЕНОВА (наклон образующей):</div>
+            <div class="angle-badge">${roundedHalf.deg}° ${roundedHalf.min}'</div>
+            <div class="exact-value">
+                📐 Округлено (цена деления угломера — 2′)<br>
+                <strong>Точное значение: ${alphaDeg.toFixed(3)}°</strong>
+            </div>
+            <div class="reference-data">
+                📊 <strong>Справочно:</strong> полный угол конуса = ${totalConeAngle.toFixed(2)}° &nbsp;|&nbsp; 
+                конусность 1:${k} &nbsp;|&nbsp; малый диаметр <span style="font-family: monospace;">d = ${d.toFixed(3)} мм</span>
+            </div>
+            <div style="margin: 5px 0 2px;"><strong>📌 Материал:</strong> ${materialObj.name}</div>
+            <div><strong>${fitReadable}</strong></div>
+            <div class="tip-box">
+                💡 <strong>Совет токарю:</strong> ${tipMessage}<br>
+                🔧 <strong>Установка:</strong> ${installAdvice}
+            </div>
+            <div style="margin-top: 12px; font-size:0.8rem; text-align:right; color:#c79356;">🎬 Дела Техники — Pavel Volkov</div>
+        `;
+        document.getElementById('resultBlock').innerHTML = resultHTML;
+    }
+
+    // ---------- отрисовка конуса с учётом масштаба ----------
+    function drawCone() {
+        let { D, L, k, d } = getInputParams();
+        if (L <= 0.01) L = 0.5;
+        if (D <= 0) D = 14;
+        if (d <= 0.01) d = 0.2;
+        if (d > D) d = D * 0.95;
+        
+        const svg = document.getElementById('coneSVG');
+        if (!svg) return;
+        svg.innerHTML = '';
+        
+        // расчёт динамического базового масштаба
+        let baseScale = 760 / (L + 50);
+        if (baseScale > 8.5) baseScale = 8.5;
+        if (baseScale < 2.2) baseScale = 2.2;
+        const finalScale = baseScale * Math.min(Math.max(currentScale, 0.45), 3.4);
+        
+        const startX = 70;
+        const centerY = 140;
+        const lengthPx = L * finalScale;
+        const rBig = (D / 2) * finalScale;
+        const rSmall = (d / 2) * finalScale;
+        
+        // рисуем трапецию (конус)
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const dPath = `
+            M ${startX} ${centerY - rBig}
+            L ${startX + lengthPx} ${centerY - rSmall}
+            L ${startX + lengthPx} ${centerY + rSmall}
+            L ${startX} ${centerY + rBig} Z
+        `;
+        path.setAttribute("d", dPath);
+        path.setAttribute("fill", "#fbe5ce");   // тёплый алюминиевый оттенок
+        path.setAttribute("stroke", "#c78e54");
+        path.setAttribute("stroke-width", "2");
+        svg.appendChild(path);
+        
+        // ось симметрии (пунктир)
+        const axis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axis.setAttribute("x1", startX - 8);
+        axis.setAttribute("y1", centerY);
+        axis.setAttribute("x2", startX + lengthPx + 15);
+        axis.setAttribute("y2", centerY);
+        axis.setAttribute("stroke", "#cfb67e");
+        axis.setAttribute("stroke-width", "1");
+        axis.setAttribute("stroke-dasharray", "5 3");
+        svg.appendChild(axis);
+        
+        // подписи размеров
+        function addText(x, y, txt, fontSize, fontWeight = "normal", color = "#886b3e") {
             const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
             t.setAttribute("x", x);
             t.setAttribute("y", y);
             t.setAttribute("font-size", fontSize);
             t.setAttribute("fill", color);
             if (fontWeight === "bold") t.setAttribute("font-weight", "bold");
-            else if (fontWeight === "italic") t.setAttribute("font-style", "italic");
+            if (fontWeight === "italic") t.setAttribute("font-style", "italic");
             t.textContent = txt;
             svg.appendChild(t);
         }
         
-        function updateResultPanel() {
-            const D = parseFloat(document.getElementById('D').value) || 14;
-            const L = parseFloat(document.getElementById('L').value) || 30;
-            if (L <= 0) {
-                document.getElementById('result').innerHTML = `<strong>⚠️ Ошибка:</strong> Длина конуса должна быть больше 0.`;
-                return;
-            }
-            const matKey = document.getElementById('material').value;
-            const fitType = document.getElementById('fitType').value;
-            const materialObj = recs[matKey];
-            const baseK = materialObj.k;
-            const k = getK(baseK, fitType);
-            const delta = L / k;
-            let d = D - delta;
-            if (d < 0.01) d = 0.01;
-            
-            // Расчёт угла наклона образующей (половина угла конуса)
-            const halfDiff = (D - d) / 2;
-            const alphaRad = Math.atan(halfDiff / L);
-            let alphaDeg = alphaRad * 180 / Math.PI;
-            if (alphaDeg < 0) alphaDeg = 0;
-            
-            // Полный угол конуса (для справки)
-            const totalConeAngle = alphaDeg * 2;
-            
-            // Округление  под угломер Семенова
-            const roundedHalf = roundToEvenMinutes(alphaDeg);
-            
-            const typeReadable = fitType === "self" ? "🔒 Самозаклинивающийся (неразборный)" : "🔓 Разборный (лёгкий съём)";
-            
-            let recommendationText = "";
-            if (alphaDeg < 1.5) {
-                recommendationText = "⚠️ Очень малый угол — обязательно используйте конусную линейку или точную настройку верхней каретки.";
-            } else if (alphaDeg > 15) {
-                recommendationText = "📐 Угол достаточно большой — удобно точить поворотом верхней каретки.";
-            } else {
-                recommendationText = "✅ Стандартный угол, можно обработать поворотом верхней каретки или конусной линейкой.";
-            }
-            
-            document.getElementById('result').innerHTML = `
-                <strong>🎯 УГОЛ ДЛЯ УГЛОМЕРА СЕМЕНОВА (наклон образующей):</strong><br>
-                <div class="angle-value">${roundedHalf.deg}° ${roundedHalf.min}'</div>
-                <div style="font-size:0.85rem; margin-bottom: 12px;">
-                    📐 Округлено (цена деления угломера — 2′)<br>
-                    <span style="color:#5a6e7c;">Точное значение: ${alphaDeg.toFixed(3)}°</span>
-                </div>
-                <div class="full-angle-note">
-                    📊 <strong>Справочно:</strong> полный угол конуса = ${totalConeAngle.toFixed(2)}° &nbsp;|&nbsp; 
-                    конусность 1:${k} &nbsp;|&nbsp; малый диаметр d = ${d.toFixed(3)} мм
-                </div>
-                <hr>
-                <strong>📌 Материал:</strong> ${materialObj.name}<br>
-                <strong>${typeReadable}</strong>
-                <div style="margin-top: 10px; background:#fff0db; padding:8px 12px; border-radius:18px; font-size:0.85rem;">
-                💡 <strong>Совет токарю:</strong> ${recommendationText}<br>
-                🔧 <strong>Установка:</strong> выставьте верхнюю каретку или угломер на <strong>${roundedHalf.deg}° ${roundedHalf.min}'</strong> — это половина угла конуса, округлённая под шкалу угломера Семенова.
-                </div>
-                <div style="margin-top:12px;">🎬<a href="https://www.youtube.com/@Pavel_Volkov" target="_blank">Дела Техники</a></div>
-            `;
+        addText(startX - 5, centerY - rBig - 9, `⌀D = ${D.toFixed(2)} мм`, 14, "bold", "#88653c");
+        addText(startX + lengthPx + 10, centerY - rSmall - 8, `⌀d = ${d.toFixed(2)} мм`, 14, "bold", "#88653c");
+        const midX = startX + lengthPx / 2;
+        const yOffset = Math.max(rBig, rSmall) + 26;
+        addText(midX - 25, centerY + yOffset, `L = ${L.toFixed(1)} мм`, 13, "normal", "#9e7a4a");
+        addText(startX + lengthPx - 55, centerY - 20, `1:${k}`, 11, "italic", "#b87f44");
+        
+        // доп. штрихи — показ угла наклона символически (небольшая выноска)
+        if (lengthPx > 40 && rBig - rSmall > 2) {
+            const arrowStartX = startX + lengthPx * 0.7;
+            const arrowStartY = centerY - rSmall - 5;
+            const arrowEndX = arrowStartX + 18;
+            const arrowEndY = arrowStartY - (rBig - rSmall) * 0.5;
+            const lineMark = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            lineMark.setAttribute("x1", arrowStartX);
+            lineMark.setAttribute("y1", arrowStartY);
+            lineMark.setAttribute("x2", arrowEndX);
+            lineMark.setAttribute("y2", arrowEndY);
+            lineMark.setAttribute("stroke", "#b58f57");
+            lineMark.setAttribute("stroke-width", "1");
+            lineMark.setAttribute("stroke-dasharray", "2 2");
+            svg.appendChild(lineMark);
         }
-        
-        function updateAll() {
-            updateResultPanel();
-            drawCone();
+    }
+    
+    // комбинированное обновление (результат + чертёж)
+    function fullUpdate() {
+        updateResultPanel();
+        drawCone();
+    }
+    
+    function debouncedUpdate() {
+        if (updateTimer) clearTimeout(updateTimer);
+        updateTimer = setTimeout(() => {
+            fullUpdate();
+        }, 12);
+    }
+    
+    // Зум-функции
+    function zoomIn() {
+        let newScale = currentScale + 0.1;
+        if (newScale > 3.0) newScale = 3.0;
+        currentScale = newScale;
+        drawCone();
+    }
+    function zoomOut() {
+        let newScale = currentScale - 0.1;
+        if (newScale < 0.5) newScale = 0.5;
+        currentScale = newScale;
+        drawCone();
+    }
+    function resetZoom() {
+        currentScale = 1.0;
+        drawCone();
+    }
+    
+    // валидация полей и привязка событий
+    function bindEvents() {
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(el => {
+            el.addEventListener('input', debouncedUpdate);
+            el.addEventListener('change', debouncedUpdate);
+        });
+        // защита от пустых полей
+        const Dfield = document.getElementById('D');
+        const Lfield = document.getElementById('L');
+        function sanitize() {
+            let Dval = parseFloat(Dfield.value);
+            if (isNaN(Dval) || Dval <= 0) Dfield.value = "14.0";
+            let Lval = parseFloat(Lfield.value);
+            if (isNaN(Lval) || Lval <= 0.05) Lfield.value = "30.0";
+            debouncedUpdate();
         }
+        Dfield.addEventListener('blur', sanitize);
+        Lfield.addEventListener('blur', sanitize);
         
-        function zoomIn() {
-            let newScale = currentScale + 0.12;
-            if (newScale > 2.8) newScale = 2.8;
-            currentScale = newScale;
-            drawCone();
-        }
-        
-        function zoomOut() {
-            let newScale = currentScale - 0.12;
-            if (newScale < 0.48) newScale = 0.48;
-            currentScale = newScale;
-            drawCone();
-        }
-        
-        function resetZoom() {
-            currentScale = 1.0;
-            drawCone();
-        }
-        
-        function debouncedUpdate() {
-            if (debounceTimer) clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                updateAll();
-            }, 10);
-        }
-        
-        window.zoomIn = zoomIn;
-        window.zoomOut = zoomOut;
-        window.resetZoom = resetZoom;
-        
-        window.onload = () => {
-            const inputs = document.querySelectorAll('input, select');
-            inputs.forEach(el => {
-                el.addEventListener('input', debouncedUpdate);
-                el.addEventListener('change', debouncedUpdate);
-            });
-            
-            const Dfield = document.getElementById('D');
-            const Lfield = document.getElementById('L');
-            const safeParse = () => {
-                if (Dfield.value === "" || isNaN(parseFloat(Dfield.value))) Dfield.value = "14";
-                if (Lfield.value === "" || isNaN(parseFloat(Lfield.value))) Lfield.value = "30";
-                debouncedUpdate();
-            };
-            Dfield.addEventListener('blur', safeParse);
-            Lfield.addEventListener('blur', safeParse);
-            
-            updateAll();
-            window.addEventListener('resize', () => drawCone());
-        };
-    </script>
+        document.getElementById('zoomInBtn').addEventListener('click', zoomIn);
+        document.getElementById('zoomOutBtn').addEventListener('click', zoomOut);
+        document.getElementById('resetZoomBtn').addEventListener('click', resetZoom);
+    }
+    
+    // инициализация + адаптивный ресайз для перерисовки svg
+    window.addEventListener('load', () => {
+        bindEvents();
+        fullUpdate();
+        window.addEventListener('resize', () => drawCone());
+    });
+</script>
 </body>
 </html>
