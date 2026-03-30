@@ -5,40 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     
     <!-- ========== ОСНОВНЫЕ SEO-ТЕГИ ДЛЯ РОССИИ ========== -->
-    <title>Калькулятор конуса для шкива — расчёт конусности и угла для токаря онлайн</title>
+    <title>Калькулятор конуса для шкива — угол наклона образующей для токаря</title>
     <meta name="description"
-        content="Бесплатный калькулятор конуса для шкива: точный расчёт малого диаметра d, конусности 1:k, угла для угломера Семенова. Визуализация конуса. Для токарных работ по металлу, шкивов, валов. Рекомендации по материалам.">
+        content="Бесплатный калькулятор конуса для шкива: точный расчёт малого диаметра d, конусности 1:k и УГЛА НАКЛОНА ОБРАЗУЮЩЕЙ с округлением под шкалу угломера Семенова (2 минуты). Для токарных работ по металлу.">
     <meta name="keywords"
-        content="калькулятор конуса, расчёт конуса шкива, конусность 1:10, угол конуса, угломер Семенова, токарные работы, шкив на вал, конус морзе, обработка конусов, токарь, конусность для шкива">
+        content="калькулятор конуса, расчёт конуса шкива, конусность 1:10, угол конуса, угломер Семенова, половина угла конуса, токарные работы, шкив на вал">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Павел Волков">
-    <meta name="yandex-verification" content="ваш_код_верификации"> <!-- Для Яндекс.Вебмастера -->
     
-    <!-- Open Graph для соцсетей (ВК, Telegram, Одноклассники) -->
-    <meta property="og:title" content="Калькулятор конуса для шкива — расчёт 1:k + угол для токаря">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Калькулятор конуса для шкива — угол наклона образующей для токаря">
     <meta property="og:description"
-        content="Точный расчёт конусности, малого диаметра и угла для угломера. Визуализация конуса. Рекомендации по материалам: алюминий, сталь, чугун, пластик. Бесплатно, без регистрации.">
+        content="Точный расчёт конусности, малого диаметра и УГЛА ДЛЯ УГЛОМЕРА СЕМЕНОВА (округление до чётных минут). Визуализация. Рекомендации по материалам.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://volkovhl.github.io/TaperPulley-Calc/">
     <meta property="og:site_name" content="Калькулятор конуса для шкива">
-    <meta property="og:image" content="https://volkovhl.github.io/TaperPulley-Calc/preview-taper.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:locale" content="ru_RU">
     
-    <!-- VK / VK Donut -->
-    <meta property="vk:image" content="https://volkovhl.github.io/TaperPulley-Calc/preview-taper.jpg">
-    
-    <!-- Twitter Card (опционально) -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Калькулятор конуса для шкива — онлайн расчёт">
-    <meta name="twitter:description" content="Конусность 1:k, угол, малый диаметр. Для токарных работ. Визуализация.">
-    
-    <!-- Favicon (конус/шкив) -->
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://volkovhl.github.io/TaperPulley-Calc/">
     
     <style>
         * {
@@ -72,7 +56,6 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.05); 
         }
 
-        /* баннер / ссылка на YouTube канал */
         .youtube-banner {
             background: linear-gradient(135deg, #ffebee 0%, #fff3e0 100%);
             border-radius: 20px;
@@ -98,16 +81,6 @@
         .youtube-icon {
             font-size: 32px;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-        .youtube-text p {
-            margin: 0;
-            font-weight: 500;
-            color: #b33b2c;
-        }
-        .youtube-text small {
-            font-size: 0.8rem;
-            color: #5a3e2b;
-            display: block;
         }
         .youtube-btn {
             background: #ff0000;
@@ -246,6 +219,21 @@
             margin: 6px 0 8px;
             box-shadow: inset 0 0 0 1px #c8e6d9;
         }
+        
+        .info-note {
+            font-size: 0.7rem; 
+            color: #7c8b9f; 
+            margin-top: 6px;
+        }
+        
+        .full-angle-note {
+            background: #f0f4f9;
+            border-radius: 16px;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            color: #2c5a74;
+        }
 
         hr {
             margin: 10px 0;
@@ -285,14 +273,12 @@
 <body>
     <div class="container">
         <h1>🔧 Калькулятор конуса <span style="font-weight: 400;">для шкива</span></h1>
-        <p style="text-align:center; color:#4a627a; margin-top: -5px; font-size: 0.9rem;">⚙️ Точим вал первым — точный расчёт конусности 1:k</p>
+        <p style="text-align:center; color:#4a627a; margin-top: -5px; font-size: 0.9rem;">⚙️ Угол наклона образующей с округлением под угломер Семенова (2 минуты)</p>
         
-        <!-- ========== БЛОК С УПОМИНАНИЕМ YOUTUBE КАНАЛА ========== -->
         <div class="youtube-banner">
             <div class="youtube-text">
                 <div class="youtube-icon">🎬🔧</div>
-                <div>
-                </div>
+                <div></div>
             </div>
             <a href="https://www.youtube.com/@Pavel_Volkov" target="_blank" rel="noopener noreferrer" class="youtube-btn">
                 🔴 Дела Техники
@@ -333,14 +319,15 @@
             <div class="svg-wrapper">
                 <svg id="coneSVG" viewBox="0 0 820 280" preserveAspectRatio="xMidYMid meet" style="background: white;"></svg>
             </div>
-            <div class="info-note" style="font-size:0.7rem; color:#7c8b9f; margin-top:6px;">↖️ Свайпайте для детального просмотра чертежа</div>
+            <div class="info-note">↖️ Свайпайте для детального просмотра чертежа</div>
         </div>
 
         <div class="result" id="result"></div>
         
         <div class="footer-note">
             📌 Калькулятор конуса для шкива — расчёт по методике “точим вал первым”.<br>
-            Конусность 1:k и угол для угломера Семенова. Автор: Павел Волков.<br>
+            🎯 <strong>Угол округлён до чётных минут</strong> — под шкалу угломера Семенова (цена деления 2 минуты).<br>
+            Конусность 1:k и малый диаметр. Автор: Павел Волков.<br>
             🔗 Проект на GitHub: <a href="https://volkovhl.github.io/TaperPulley-Calc/" target="_blank" rel="author">TaperPulley-Calc</a> | <a href="https://www.youtube.com/@Pavel_Volkov" target="_blank" rel="me">YouTube канал</a>
         </div>
     </div>
@@ -349,7 +336,6 @@
         let currentScale = 1.0;
         let debounceTimer = null;
         
-        // Справочник материалов и базовой конусности
         const recs = {
             aluminum: {k:18, name:"Алюминий / Дюраль"},
             steel:    {k:11, name:"Сталь"},
@@ -362,7 +348,18 @@
         function getK(baseK, fitType) {
             return (fitType === "free") ? Math.round(baseK * 0.75) : baseK;
         }
-
+        
+        // Функция округления угла до чётных минут (под угломер Семенова)
+        function roundToEvenMinutes(angleDeg) {
+            if (angleDeg < 0) return {deg: 0, min: 0};
+            
+            const totalMinutes = angleDeg * 60;
+            const roundedMinutes = Math.round(totalMinutes / 2) * 2; // округление до чётных минут
+            const deg = Math.floor(roundedMinutes / 60);
+            const min = roundedMinutes % 60;
+            return {deg, min};
+        }
+        
         function drawCone() {
             const D = parseFloat(document.getElementById('D').value) || 14;
             let L = parseFloat(document.getElementById('L').value) || 30;
@@ -405,7 +402,6 @@
             path.setAttribute("stroke-width", "2.5");
             svg.appendChild(path);
             
-            // Осевая линия
             const axis = document.createElementNS("http://www.w3.org/2000/svg", "line");
             axis.setAttribute("x1", startX - 6);
             axis.setAttribute("y1", centerY);
@@ -439,6 +435,10 @@
         function updateResultPanel() {
             const D = parseFloat(document.getElementById('D').value) || 14;
             const L = parseFloat(document.getElementById('L').value) || 30;
+            if (L <= 0) {
+                document.getElementById('result').innerHTML = `<strong>⚠️ Ошибка:</strong> Длина конуса должна быть больше 0.`;
+                return;
+            }
             const matKey = document.getElementById('material').value;
             const fitType = document.getElementById('fitType').value;
             const materialObj = recs[matKey];
@@ -448,35 +448,48 @@
             let d = D - delta;
             if (d < 0.01) d = 0.01;
             
+            // Расчёт угла наклона образующей (половина угла конуса)
             const halfDiff = (D - d) / 2;
             const alphaRad = Math.atan(halfDiff / L);
             let alphaDeg = alphaRad * 180 / Math.PI;
             if (alphaDeg < 0) alphaDeg = 0;
             
+            // Полный угол конуса (для справки)
             const totalConeAngle = alphaDeg * 2;
-            const degreesFull = Math.floor(totalConeAngle);
-            const minutesFull = Math.round((totalConeAngle - degreesFull) * 60);
-            const roundedMinutesFull = Math.round(minutesFull / 2) * 2;
             
-            const halfDeg = alphaDeg;
-            const halfDegInt = Math.floor(halfDeg);
-            const halfMin = Math.round((halfDeg - halfDegInt) * 60);
-            const halfMinRounded = Math.round(halfMin / 2) * 2;
+            // Округление до чётных минут под угломер Семенова
+            const roundedHalf = roundToEvenMinutes(alphaDeg);
             
             const typeReadable = fitType === "self" ? "🔒 Самозаклинивающийся (неразборный)" : "🔓 Разборный (лёгкий съём)";
             
+            let recommendationText = "";
+            if (alphaDeg < 1.5) {
+                recommendationText = "⚠️ Очень малый угол — обязательно используйте конусную линейку или точную настройку верхней каретки.";
+            } else if (alphaDeg > 15) {
+                recommendationText = "📐 Угол достаточно большой — удобно точить поворотом верхней каретки.";
+            } else {
+                recommendationText = "✅ Стандартный угол, можно обработать поворотом верхней каретки или конусной линейкой.";
+            }
+            
             document.getElementById('result').innerHTML = `
-                <strong>📐 Угол для угломера Семенова (полный угол конуса):</strong><br>
-                <div class="angle-value">${degreesFull}° ${roundedMinutesFull}'</div>
-                <span style="font-size:0.9rem;">↳ Угол наклона верхней каретки (образующая): <strong>${halfDegInt}° ${halfMinRounded}'</strong></span>
+                <strong>🎯 УГОЛ ДЛЯ УГЛОМЕРА СЕМЕНОВА (наклон образующей):</strong><br>
+                <div class="angle-value">${roundedHalf.deg}° ${roundedHalf.min}'</div>
+                <div style="font-size:0.85rem; margin-bottom: 12px;">
+                    📐 Округлено (цена деления угломера — 2′)<br>
+                    <span style="color:#5a6e7c;">Точное значение: ${alphaDeg.toFixed(3)}°</span>
+                </div>
+                <div class="full-angle-note">
+                    📊 <strong>Справочно:</strong> полный угол конуса = ${totalConeAngle.toFixed(2)}° &nbsp;|&nbsp; 
+                    конусность 1:${k} &nbsp;|&nbsp; малый диаметр d = ${d.toFixed(3)} мм
+                </div>
                 <hr>
-                <strong>⚙️ Конусность:</strong> 1:${k} &nbsp;&nbsp;|&nbsp; <strong>Малый диаметр d:</strong> ${d.toFixed(3)} мм<br>
                 <strong>📌 Материал:</strong> ${materialObj.name}<br>
                 <strong>${typeReadable}</strong>
                 <div style="margin-top: 10px; background:#fff0db; padding:8px 12px; border-radius:18px; font-size:0.85rem;">
-                💡 <strong>Совет:</strong> При токарной обработке — торец вала под конус, шкив притирать по краске. Для разборных конусов используйте 1:${k} (рекомендация).
+                💡 <strong>Совет токарю:</strong> ${recommendationText}<br>
+                🔧 <strong>Установка:</strong> выставьте верхнюю каретку или угломер на <strong>${roundedHalf.deg}° ${roundedHalf.min}'</strong> — это половина угла конуса, округлённая под шкалу угломера Семенова.
                 </div>
-                <div style="margin-top:12px;">🎬 YouTube: <a href="https://www.youtube.com/@Pavel_Volkov" target="_blank">Дела Техники</a></div>
+                <div style="margin-top:12px;">🎬<a href="https://www.youtube.com/@Pavel_Volkov" target="_blank">Дела Техники</a></div>
             `;
         }
         
@@ -511,7 +524,6 @@
             }, 10);
         }
         
-        // Глобальные функции для кнопок
         window.zoomIn = zoomIn;
         window.zoomOut = zoomOut;
         window.resetZoom = resetZoom;
