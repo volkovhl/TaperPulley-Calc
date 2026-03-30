@@ -16,7 +16,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Калькулятор конуса для шкива — угол наклона образующей для токаря">
     <meta property="og:description"
-        content="Точный расчёт конусности, малого диаметра и УГЛА ДЛЯ УГЛОМЕРА СЕМЕНОВА (округление до чётных минут). Визуализация. Рекомендации по материалам.">
+        content="Точный расчёт конусности, малого диаметра и УГЛА ДЛЯ УГЛОМЕРА СЕМЕНОВА (округление). Визуализация. Рекомендации по материалам.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://volkovhl.github.io/TaperPulley-Calc/">
     <meta property="og:site_name" content="Калькулятор конуса для шкива">
@@ -274,14 +274,8 @@
     <div class="container">
         <h1>🔧 Калькулятор конуса <span style="font-weight: 400;">для шкива</span></h1>
         <p style="text-align:center; color:#4a627a; margin-top: -5px; font-size: 0.9rem;">⚙️ Угол наклона образующей с округлением под угломер Семенова (2 минуты)</p>
-        
-        <div class="youtube-banner">
-            <div class="youtube-text">
-                <div class="youtube-icon">🎬🔧</div>
                 <div></div>
             </div>
-            <a href="https://www.youtube.com/@Pavel_Volkov" target="_blank" rel="noopener noreferrer" class="youtube-btn">
-                🔴 Дела Техники
             </a>
         </div>
         
@@ -326,9 +320,9 @@
         
         <div class="footer-note">
             📌 Калькулятор конуса для шкива — расчёт по методике “точим вал первым”.<br>
-            🎯 <strong>Угол округлён до чётных минут</strong> — под шкалу угломера Семенова (цена деления 2 минуты).<br>
+            🎯 <strong>Угол округлён</strong> — под шкалу угломера Семенова (цена деления 2 минуты).<br>
             Конусность 1:k и малый диаметр. Автор: Павел Волков.<br>
-            🔗 Проект на GitHub: <a href="https://volkovhl.github.io/TaperPulley-Calc/" target="_blank" rel="author">TaperPulley-Calc</a> | <a href="https://www.youtube.com/@Pavel_Volkov" target="_blank" rel="me">YouTube канал</a>
+            🔗 Проект на GitHub: <a href="https://volkovhl.github.io/TaperPulley-Calc/" target="_blank" rel="author">TaperPulley-Calc</a> 
         </div>
     </div>
 
@@ -349,12 +343,12 @@
             return (fitType === "free") ? Math.round(baseK * 0.75) : baseK;
         }
         
-        // Функция округления угла до чётных минут (под угломер Семенова)
+        // Функция округления угла до (под угломер Семенова)
         function roundToEvenMinutes(angleDeg) {
             if (angleDeg < 0) return {deg: 0, min: 0};
             
             const totalMinutes = angleDeg * 60;
-            const roundedMinutes = Math.round(totalMinutes / 2) * 2; // округление до чётных минут
+            const roundedMinutes = Math.round(totalMinutes / 2) * 2; // округление
             const deg = Math.floor(roundedMinutes / 60);
             const min = roundedMinutes % 60;
             return {deg, min};
@@ -457,7 +451,7 @@
             // Полный угол конуса (для справки)
             const totalConeAngle = alphaDeg * 2;
             
-            // Округление до чётных минут под угломер Семенова
+            // Округление  под угломер Семенова
             const roundedHalf = roundToEvenMinutes(alphaDeg);
             
             const typeReadable = fitType === "self" ? "🔒 Самозаклинивающийся (неразборный)" : "🔓 Разборный (лёгкий съём)";
